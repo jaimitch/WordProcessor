@@ -12,6 +12,11 @@ import java.util.Map;
 public class Processor {
     Map<Object, Object> workOrder = new HashMap<>();
     ObjectMapper objectMapper = new ObjectMapper();
+    Set<WorkOrder> initialSet = new HashSet<>();
+    Set<WorkOrder> assignedSet = new HashSet<>();
+    Set<WorkOrder> inProgressSet = new HashSet<>();
+    Set<WorkOrder> doneSet = new HashSet<>();
+    Map<Status, Set<WorkOrder>> workOrderMap = new HashMap();
 
     public void processWorkOrders() {
         moveIt();
@@ -20,6 +25,52 @@ public class Processor {
 
     private void moveIt() {
         // move work orders in map from one state to another
+
+        initialSet        initialSet = workOrderMap.get(INITIAL);
+        System.out.println("Line 28 initialSet: " + initialSet);
+//        assignedSet = workOrderMap.get(ASSIGNED);
+        System.out.println("Line 30 assignedSet: " + assignedSet);
+//        inProgressSet = workOrderMap.get(IN_PROGRESS);
+        System.out.println("Line 32 inProgressSet: " + inProgressSet);
+//        doneSet = workOrderMap.get(DONE);
+        System.out.println("Line 34 doneSet: " + doneSet);
+
+//        for(WorkOrder order : doneSet) {
+//            order.setStatus(Status.DONE);
+//            String json;
+//            try {
+//                File newWorkOrder = new File(order.getId() + ".json");
+//                json = mapper.writeValueAsString(order);
+//                FileWriter createFile = new FileWriter(newWorkOrder);
+//                createFile.write(json);
+//                createFile.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        doneSet.clear(); = workOrderMap.get(INITIAL);
+        System.out.println("Line 28 initialSet: " + initialSet);
+//        assignedSet = workOrderMap.get(ASSIGNED);
+        System.out.println("Line 30 assignedSet: " + assignedSet);
+//        inProgressSet = workOrderMap.get(IN_PROGRESS);
+        System.out.println("Line 32 inProgressSet: " + inProgressSet);
+//        doneSet = workOrderMap.get(DONE);
+        System.out.println("Line 34 doneSet: " + doneSet);
+
+        for(WorkOrder order : doneSet) {
+            order.setStatus(Status.DONE);
+            String json;
+            try {
+                File newWorkOrder = new File(order.getId() + ".json");
+                json = mapper.writeValueAsString(order);
+                FileWriter createFile = new FileWriter(newWorkOrder);
+                createFile.write(json);
+                createFile.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        doneSet.clear();
     }
 
     private void readIt() {
